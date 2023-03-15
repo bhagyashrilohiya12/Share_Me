@@ -1,0 +1,343 @@
+{
+  "project_info": {
+    "project_number": "190341061745",
+    "firebase_url": "https://clippicreview.firebaseio.com",
+    "project_id": "clippicreview",
+    "storage_bucket": "clippicreview.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:0c9ae7dc46028e14820fd0",
+        "android_client_info": {
+          "package_name": "com.beardedgentleman.externaldevelopment.cpr.CPRBusinessApp.cpr_business"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:3f567aaa76b6e74c820fd0",
+        "android_client_info": {
+          "package_name": "com.example.cpr2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:a6cfa7e15a9984ea820fd0",
+        "android_client_info": {
+          "package_name": "com.example.cpr_bus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:5146f23c57bbfeeb820fd0",
+        "android_client_info": {
+          "package_name": "com.maranta4.cpr_account_management"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:0d135b3191445b04820fd0",
+        "android_client_info": {
+          "package_name": "com.maranta4.cpr_bus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:e28f03d103fc9de4820fd0",
+        "android_client_info": {
+          "package_name": "com.maranta4.cpr_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:18085ea6fee311f7",
+        "android_client_info": {
+          "package_name": "com.menasoft.externaldevelopment.cpr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-u59bekic5vg0l59mgh7u5a4m1ea2hmgj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.menasoft.externaldevelopment.cpr",
+            "certificate_hash": "ce523106ac33ae0e91d1cd41e9fff888324031f4"
+          }
+        },
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:6f03103dcda9ea9a820fd0",
+        "android_client_info": {
+          "package_name": "com.menasoft.externaldevelopment.cprbusiness"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:190341061745:android:54105b5ae64c0490820fd0",
+        "android_client_info": {
+          "package_name": "com.neil.cpr_bus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQklt-kTfTM8CZQvPPJslfr7P6bpnuo8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "190341061745-87jkr05hudors8dthe3k5lse63g8i2a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "190341061745-417fs03bafcvav6c7g1ecn9v39omf08q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.maranta4.cpruser.ios"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

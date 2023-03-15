@@ -1,0 +1,1 @@
+enum CPRSearchType { reviews, places }

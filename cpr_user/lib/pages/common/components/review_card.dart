@@ -1,0 +1,215 @@
+import 'package:cpr_user/constants/cpr_routes.dart';
+import 'package:cpr_user/models/place.dart';
+import 'package:cpr_user/models/review.dart';
+import 'package:cpr_user/models/user.dart';
+import 'package:cpr_user/pages/common/components/cpr_button.dart';
+import 'package:cpr_user/pages/common/components/cpr_card.dart';
+import 'package:cpr_user/pages/common/components/cpr_search.dart';
+import 'package:cpr_user/pages/common/components/review_detail.dart';
+import 'package:cpr_user/providers/review_provider.dart';
+import 'package:cpr_user/providers/session_provider.dart';
+import 'package:cpr_user/providers/sorting_provider.dart';
+import 'package:cpr_user/resource/toast/ToolsToast.dart';
+import 'package:cpr_user/services/places_service.dart';
+import 'package:cpr_user/theming/styles.dart';
+import 'package:fastor_app_ui_widget/fastor_app_ui_widget.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:provider/provider.dart' as p;
+
+class ReviewCard extends StatelessWidget {
+
+  //final GlobalKey<ScaffoldState> state;
+  final Place place;
+  final String excludeReview;
+  CPRUser loginedUser;
+
+  //final List<Review> reviews;
+  ReviewCard({
+
+    required this.place,
+    required this.loginedUser,
+    required this.excludeReview,
+    //this.state,
+    //required this.reviews,
+  })  ;
+
+  @override
+  Widget build(BuildContext context) {
+    var reProvider = p.Provider.of<ReviewProvider>(context, listen: false);
+    return p.ChangeNotifierProvider(
+      create: (context) =>
+      SortingProvider(reProvider, place.googlePlaceID!, excludeReview),
+      child: CPRCard(
+        icon: MaterialCommunityIcons.comment_text_multiple_outline,
+        title: Text(
+          "Reviews",
+          style: CPRTextStyles.cardTitleBlack,
+        ),
+        subtitle: Text(
+          "Look what people think about this place",
+          style: CPRTextStyles.cardSubtitleBlack,
+        ),
+        backgroundColor: Colors.white,
+        child: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  p.Consumer<SessionProvider>(
+                    builder: (context, provider, _) {
+                      return Text(provider.user?.displayName ?? '');
+                    },
+                  ),
+                  CPRButton(
+                      borderRadius: 10,
+                      height: 30,
+                      horizontalPadding: 10,
+                      verticalPadding: 0,
+                      onPressed: () {
+                        CPRRoutes.createReview(context, place: place);
+                      },
+                      color: CPRColors.cprButtonPink,
+                      child: Center(
+                        child: Text(
+                          "New Review",
+                          style: CPRTextStyles.buttonSmallWhite,
+                        ),
+                      ))
+                ],
+              ),
+            ),
+            Container(
+              height: 1,
+              color: Colors.grey.withOpacity(0.2),
+            ),
+            Container(
+//              color: Colors.green,
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              child: p.Consumer<SortingProvider>(builder: (_, provider, __) {
+//                if (reviewProvider.currentPlaceId != place.googlePlaceID) {
+
+                return Container(
+//                    color: Colors.yellow,
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      " Sort by: ",
+                      style: CPRTextStyles.reviewCardContentTextStyle,
+                    ),
+                    RadioButtonGroup(
+                      picked: provider.selectedOption,
+                      labelStyle: CPRTextStyles.buttonMediumWhite.copyWith(fontWeight: FontWeight.normal),
+                      itemBuilder: (radio, text, int) {
+                        var currentIndex = provider.reviewSortOptions.indexOf(provider.selectedOption);
+                        return GestureDetector(
+                          onTap: () async {
+                            radio.onChanged!(text);
+                          },
+                          child: Container(
+                            margin: const EdgeInsets.all(2),
+                            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 3),
+                            decoration: BoxDecoration(
+                                color: currentIndex == int ? CPRColors.cprButtonPink : Colors.grey.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: text,
+                          ),
+                        );
+                      },
+                      orientation: GroupedButtonsOrientation.HORIZONTAL,
+                      labels: provider.reviewSortOptions,
+                      onSelected: (String selected) => provider.selectOption(selected),
+                    ),
+                  ],
+                ));
+              }),
+            ),
+            Container(
+              height: 1,
+              color: Colors.grey.withOpacity(0.2),
+            ),
+            p.Consumer<SortingProvider>(
+              builder: (context, sortingProvider, _) {
+                var reviewProvider = p.Provider.of<ReviewProvider>(context);
+
+                return ListView.builder(
+                  itemBuilder: (context, i) {
+                    return GestureDetector(
+                      onTap: () async {
+                        Place? place;
+                        try {
+                          place = await PlacesService().findPlaceById(reviewProvider.lastFiveReviewsByPlace![i].placeID!);
+                        } catch (e) {
+                          return ;
+                        }
+
+                        if( place == null ) {
+                          ToolsToast.i(context,  "Place not found.");
+                          return;
+                        }
+
+                        Navigator.of(context)
+                            .push(CPRRoutes.reviewDetailPage(reviewProvider.lastFiveReviewsByPlace![i], place));
+                      },
+                      child: ReviewDetail(
+                        review: reviewProvider.lastFiveReviewsByPlace![i],
+                        loginedUser: loginedUser,
+                      ),
+                    );
+                  },
+
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: reviewProvider.lastFiveReviewsByPlace?.length ?? 0,
+                );
+              },
+            )
+          ],
+        ),
+        footer: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: p.Consumer<ReviewProvider>(builder: (context, reviewProvider, _) {
+              return CPRButton(
+                onPressed: () {
+                  reviewProvider.loadAllReviewsByPlace(place.googlePlaceID!).then((onValue) {
+
+
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (builder) {
+                        return Container(
+                          decoration: BoxDecoration(shape: BoxShape.circle),
+
+                         // child: EmptyView.colored(200, 400, Colors.brown),
+                          /**
+                           * //#abdo
+                              child: CPRSearch<Review>(title: place.name, subtitle: place.address, reviews: onValue),
+                           */
+                         child: CPRSearch <Review>(title: place.name, subtitle: place.address, reviews: onValue  ),
+                        );
+                      },
+                    );
+
+
+                  });
+                },
+                borderRadius: 8,
+                verticalPadding: 16,
+                width: MediaQuery.of(context).size.width / 2,
+                child: Text(
+                  "View all Reviews",
+                  style: CPRTextStyles.buttonMediumWhite,
+                ),
+              );
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+}

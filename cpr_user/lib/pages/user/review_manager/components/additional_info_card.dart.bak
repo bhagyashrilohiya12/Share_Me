@@ -1,0 +1,322 @@
+import 'package:cpr_user/models/business_internal_promotion.dart';
+import 'package:cpr_user/models/business_server.dart';
+import 'package:cpr_user/pages/common/components/cpr_card.dart';
+import 'package:cpr_user/pages/common/components/review_text_field.dart';
+import 'package:cpr_user/theming/styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+
+class AdditionalInfoCard extends StatelessWidget {
+  const AdditionalInfoCard({
+    Key key,
+    required TextEditingController firstInputController,
+    required TextEditingController secondInputController,
+    required TextEditingController thirdInputController,
+    required TextEditingController fourthInputController,
+    required TextEditingController fifthInputController,
+    required FocusNode firstNode,
+    required FocusNode secondNode,
+    required FocusNode thirdNode,
+    required FocusNode fourthNode,
+    required FocusNode fifthNode,
+    required List<CPRBusinessServer> employees,
+    required CPRBusinessServer selectedEmployee,
+    required Function onSelectEmployee,
+    required List<CPRBusinessInternalPromotion> promotions,
+    required CPRBusinessInternalPromotion selectedPromotion,
+    required Function onSelectPromotion,
+    required bool usePromotion,
+    required Function onUsePromotionChange,
+  })  : _firstInputController = firstInputController,
+        _secondInputController = secondInputController,
+        _thirdInputController = thirdInputController,
+        _fourthInputController = fourthInputController,
+        _firstNode = firstNode,
+        _secondNode = secondNode,
+        _thirdNode = thirdNode,
+        _fourthNode = fourthNode,
+        _fifthNode = fifthNode,
+        _fifthInputController = fifthInputController,
+        employees = employees,
+        _selectedEmployee = selectedEmployee,
+        _onSelectEmployee = onSelectEmployee,
+        _promotions = promotions,
+        _selectedPromotion = selectedPromotion,
+        _onSelectPromotion = onSelectPromotion,
+        _usePromotion = usePromotion,
+        _onUsePromotionChange = onUsePromotionChange,
+        super(key: key);
+
+  final TextEditingController _firstInputController;
+  final _secondInputController;
+  final _thirdInputController;
+  final _fourthInputController;
+  final FocusNode _firstNode;
+  final FocusNode _secondNode;
+  final FocusNode _thirdNode;
+  final FocusNode _fourthNode;
+  final FocusNode _fifthNode;
+  final TextEditingController _fifthInputController;
+  final List<CPRBusinessServer> employees;
+  final CPRBusinessServer _selectedEmployee;
+  final Function _onSelectEmployee;
+  final List<CPRBusinessInternalPromotion> _promotions;
+  final CPRBusinessInternalPromotion _selectedPromotion;
+  final Function _onSelectPromotion;
+  final bool _usePromotion;
+  final Function _onUsePromotionChange;
+
+  @override
+  Widget build(BuildContext context) {
+    return CPRCard(
+      title: Text(
+        "Additional Info",
+        style: CPRTextStyles.cardTitleBlack,
+      ),
+      subtitle: Text(
+        "subtitle goes here",
+        style: CPRTextStyles.cardSubtitleBlack,
+      ),
+      backgroundColor: Colors.white,
+      icon: MaterialCommunityIcons.information_outline,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+          child: Column(
+            children: <Widget>[
+              if(employees != null && employees.length > 0)
+              Container(
+                      width: double.infinity,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5).copyWith(bottom: 0),
+                            child: Text(
+                              "Who helped/served you?",
+                              style: CPRTextStyles.cardSubtitleBlack.copyWith(
+                                fontSize: 11,
+                                // fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                            color: Colors.grey.withOpacity(0.2),
+                            child: DropdownButton<CPRBusinessServer>(
+                              isExpanded: true,
+                              underline: SizedBox(),
+                              hint: Text("Select One"),
+                              value: _selectedEmployee,
+                              items: employees.map((CPRBusinessServer value) {
+                                return value.id==null?new DropdownMenuItem<CPRBusinessServer>(
+                                  value: value,
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(200),
+                                        child: Image(
+                                          image: AssetImage("assets/images/no_avatar_image_choosed.png"),
+                                          width: 36,
+                                          height: 36,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                        child: Text("Other (Not Listed)"),
+                                      )
+                                    ],
+                                  ),
+                                ):new DropdownMenuItem<CPRBusinessServer>(
+                                  value: value,
+                                  child: Row(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(200),
+                                        child: Image(
+                                          image: value.profilePictureURL.isNotEmpty
+                                              ? NetworkImage(value.profilePictureURL)
+                                              : AssetImage("assets/images/no_avatar_image_choosed.png"),
+                                          width: 36,
+                                          height: 36,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                        child: Text(value.firstName + " " + value.surname),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (CPRBusinessServer v) {
+                                _onSelectEmployee(v);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+              if(employees != null && employees.length > 0 && (_selectedEmployee!=null && _selectedEmployee.id==null))
+              ReviewTextField(
+                      textInputAction: TextInputAction.next,
+                      label: "Other",
+                      controller: _firstInputController,
+                      focusNode: _firstNode,
+                      parentContext: context,
+                      nextFocus: _secondNode,
+                      maxLines: 1),
+
+              if((employees == null || employees.length == 0) && _selectedEmployee==null)
+              ReviewTextField(
+                      textInputAction: TextInputAction.next,
+                      label: "Who helped/served you?",
+                      controller: _firstInputController,
+                      focusNode: _firstNode,
+                      parentContext: context,
+                      nextFocus: _secondNode,
+                      maxLines: 1),
+
+              ReviewTextField(
+                  textInputAction: TextInputAction.next,
+                  label: "What did you get done?",
+                  controller: _secondInputController,
+                  focusNode: _secondNode,
+                  parentContext: context,
+                  nextFocus: _thirdNode,
+                  maxLines: 1),
+              ReviewTextField(
+                  textInputAction: TextInputAction.next,
+                  label: "Why are you there?",
+                  controller: _thirdInputController,
+                  focusNode: _thirdNode,
+                  parentContext: context,
+                  nextFocus: _fourthNode,
+                  maxLines: 1),
+              ReviewTextField(
+                  textInputAction: TextInputAction.next,
+                  label: "With",
+                  controller: _fourthInputController,
+                  focusNode: _fourthNode,
+                  parentContext: context,
+                  nextFocus: _fifthNode,
+                  maxLines: 1),
+              if (_promotions != null && _promotions.length > 0)
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5).copyWith(bottom: 0),
+                        child: Text(
+                          "Use Promotion?",
+                          style: CPRTextStyles.cardSubtitle.copyWith(
+                            fontSize: 11,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                        color: Colors.grey.withOpacity(0.2),
+                        child: DropdownButton<bool>(
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          value: _usePromotion ?? false,
+                          hint: Text("Please Select One"),
+                          items: [true, false].map((value) {
+                            return new DropdownMenuItem<bool>(
+                              value: value,
+                              child: Text(value ? "Yes" : "No"),
+                            );
+                          }).toList(),
+                          onChanged: (v) {
+                            _onUsePromotionChange(v);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              if (_usePromotion && _promotions != null && _promotions.length > 0)
+                Container(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5).copyWith(bottom: 0),
+                        child: Text(
+                          "Select Promotion",
+                          style: CPRTextStyles.cardSubtitle.copyWith(
+                            fontSize: 11,
+                            // fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
+                        color: Colors.grey.withOpacity(0.2),
+                        child: DropdownButton<CPRBusinessInternalPromotion>(
+                          isExpanded: true,
+                          underline: SizedBox(),
+                          value: _selectedPromotion,
+                          items: _promotions.map((CPRBusinessInternalPromotion value) {
+                            return new DropdownMenuItem<CPRBusinessInternalPromotion>(
+                              value: value,
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(200),
+                                    child: Image(
+                                      image: value.pictureURL.isNotEmpty
+                                          ? NetworkImage(value.pictureURL)
+                                          : AssetImage("assets/images/no_avatar_image_choosed.png"),
+                                      width: 36,
+                                      height: 36,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      value.title,
+                                      maxLines: 1,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                          onChanged: (v) {
+                            _onSelectPromotion(v);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ReviewTextField(
+                  controller: _fifthInputController,
+                  focusNode: _fifthNode,
+                  label: "Write a comment. Explain your experience, use hashtags #",
+                  maxLines: 2),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

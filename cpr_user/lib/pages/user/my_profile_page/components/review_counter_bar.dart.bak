@@ -1,0 +1,180 @@
+import 'package:cpr_user/constants/main_categories.dart';
+import 'package:cpr_user/models/place.dart';
+import 'package:cpr_user/models/review.dart';
+import 'package:cpr_user/pages/common/components/cpr_search.dart';
+import 'package:cpr_user/pages/user/my_prizes_competition_page/my_prizes_competition_page.dart';
+import 'package:cpr_user/providers/session_provider.dart';
+import 'package:cpr_user/theming/styles.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart' as p;
+
+class ReviewCounterBar extends StatelessWidget {
+  int prizesCount = null;
+
+  @override
+  Widget build(BuildContext context) {
+    var session = p.Provider.of<SessionProvider>(context);
+    _getPrizesCount(context, session.user.email);
+    return Container(
+      padding: EdgeInsets.only(top: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          InkWell(
+              onTap: () {
+                showSearchBar(context, MainCategory.myFavoritePlaces);
+              },
+              child: Container(
+                padding: EdgeInsets.only(right: 20),
+                child: Column(
+                  children: <Widget>[
+
+                    Image(
+                      image: AssetImage('assets/images/ic_favorite.png'),
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.contain,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text("Favorites",style: TextStyle(
+                          color: Colors.white
+                      ),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(session.favoritesCount.toString(), style: CPRTextStyles.cardTitle),
+                    ),
+                  ],
+                ),
+              )),
+          InkWell(
+              onTap: () {
+                showSearchBar(context, MainCategory.saveForLaterPlaces);
+              },
+              child: Container(
+                padding: EdgeInsets.only(right: 20),
+                child: Column(
+                  children: <Widget>[
+
+                    Image(
+                      image: AssetImage('assets/images/ic_for_later.png'),
+                      width: 24,
+                      height: 24,
+                      fit: BoxFit.contain,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text("For Later",style: TextStyle(
+                          color: Colors.white
+                      ),),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(session.saveForLaterCount.toString(), style: CPRTextStyles.cardTitle),
+                    ),
+                  ],
+                ),
+              )),
+          InkWell(
+            onTap: () {
+              showSearchBar(context, MainCategory.myReviews);
+            },
+            child: Container(
+              padding: EdgeInsets.only(right: 20),
+              child: Column(
+                children: <Widget>[
+
+                  Image(
+                    image: AssetImage('assets/images/ic_reviews.png'),
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.contain,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text("Reviews",style: TextStyle(
+                        color: Colors.white
+                    ),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(session.reviewCount.toString(), style: CPRTextStyles.cardTitle),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(context, new MaterialPageRoute(builder: (context) => MyPrizesCompetitionPage()));
+            },
+            child: Container(
+              child: Column(
+                children: <Widget>[
+                  Image(
+                    image: AssetImage('assets/images/ic_prizes.png'),
+                    width: 24,
+                    height: 24,
+                    fit: BoxFit.contain,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text("Prizes",style: TextStyle(
+                        color: Colors.white
+                    ),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: FutureBuilder<int>(
+                      future: session.prizesCount, // async work
+                      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Text('0', style: CPRTextStyles.cardTitle);
+                          default:
+                            if (snapshot.hasError)
+                              return Text('0', style: CPRTextStyles.cardTitle);
+                            else
+                              return Text("${snapshot.data.toString()}", style: CPRTextStyles.cardTitle);
+                        }
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _getPrizesCount(BuildContext context, String userId) async {}
+
+  void showSearchBar(BuildContext context, MainCategory category) async {
+    var displayName = MainCategoryUtil.getDisplayName(category);
+    var sessionProvider = p.Provider.of<SessionProvider>(context, listen: false);
+    sessionProvider.startLoading();
+    var list;
+    if (category == MainCategory.myReviews)
+      list = sessionProvider.places[category].map((f) => f as Review).toList();
+    else
+      list = sessionProvider.places[category].map((f) => f as Place).toList();
+    sessionProvider.stopLoading();
+    var searchComponent = CPRSearch(
+      title: displayName,
+      subtitle: "Showing all the ${displayName.toLowerCase()}",
+      reviews: list,
+      currentLocation: sessionProvider.currentLocation,
+    );
+    Scaffold.of(context).showBottomSheet((builder) {
+      return Container(
+        height: MediaQuery.of(context).size.height * 0.7,
+        child: searchComponent,
+      );
+    });
+  }
+}
